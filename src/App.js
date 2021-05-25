@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Frase from './components/Frase';
 
@@ -13,11 +13,17 @@ const Boton = styled.button`
   background: --webkit-linear-gradient(top left, #007d35 0%, #007d35 40%, #0f574e 100%);
   background-size: 300px;
   font-family: Arial, Helvetica, sans-serif;
-  color: #fff;
+  color: black;
   margin-top: 3rem;
   padding: 1rem 3rem;
   font-size: 2rem;
   border: 2px solid black;
+  transition: background-size .8s ease;
+
+  :hover{
+     cursor:pointer;
+     background-size: 400px;
+  }
 `;
 
 function App() {
@@ -25,7 +31,6 @@ function App() {
   //state de Frases
 
   const [frase, guardarFrase] = useState({});
-
 
   //1ra forma larga obtener una frase desde una api
   //   const consultarAPI = () =>{
@@ -39,6 +44,12 @@ function App() {
     const frase = await api.json();
     guardarFrase(frase[0]);
   }
+//useEfect cargar automaticamente  una frase(la primera frase)
+//consulta la api automaticamente la primera vez
+useEffect(() => {
+  consultarAPI()
+}, [])
+
 
   return (
     <Contenedor>
